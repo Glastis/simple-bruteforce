@@ -11,7 +11,7 @@
 #define TRUE                    1u
 #define FALSE                   0u
 #define UNUSED(X)               ((void)(X))
-#define ALPHABET                "abcdefhijklmnopqrstuvwxyzABCDEFHIJKLMNOPQRSTUVWXYZ0123456789"
+#define ALPHABET                "abcdefghijklmnopqrstuvwxyz0123456789!@#$%&*"
 #define HASH_HEX_FORMAT         "%02x"
 
 #define OPTION_VERBOSE_1        "-v"
