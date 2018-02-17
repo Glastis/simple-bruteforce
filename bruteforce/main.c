@@ -1,13 +1,11 @@
 /*
-// Created by glastis on 06/02/18.
+** Created by glastis on 06/02/18.
 */
 
 #include <unistd.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <openssl/md5.h>
 
 #include "main.h"
 
@@ -43,7 +41,7 @@ static int          get_next_passphrase(char **passphrase_ori, unsigned int len)
             len += 1;
             if (!(passphrase = realloc(passphrase, sizeof(char) * (len + 1))))
             {
-                fprintf(stderr, "%s", "Error when allocating memory\n");
+                fprintf(stderr, "%s", MESSAGE_MALLOC_FAILED);
                 exit(EXIT_FAILURE);
             }
             *passphrase_ori = passphrase;
@@ -57,31 +55,6 @@ static int          get_next_passphrase(char **passphrase_ori, unsigned int len)
     return (len);
 }
 
-static int          compare_passphrase(t_opt *opt, const char *passphrase, unsigned int len)
-{
-    unsigned char   hash_raw[MD5_DIGEST_LENGTH];
-    char            result[MD5_HASH_SIGNED_SIZE];
-    unsigned int    i;
-
-    i = 0;
-    MD5((unsigned char *)passphrase, len, hash_raw);
-    while (i < MD5_DIGEST_LENGTH)
-    {
-        sprintf(&result[i * 2], HASH_HEX_FORMAT, hash_raw[i]);
-        i += 1;
-    }
-    if (opt->verbose_lvl_2)
-    {
-        printf("%s: %s\n", passphrase, result);
-    }
-    else if (opt->verbose_lvl_1)
-    {
-        printf("%s\n", passphrase);
-    }
-
-    return (strcmp(opt->hash_ref, result));
-}
-
 int                 main(int ac, char **av)
 {
     char            *passphrase;
@@ -89,18 +62,29 @@ int                 main(int ac, char **av)
     t_opt           opt;
 
     UNUSED(ac);
+    len = 0;
     passphrase = NULL;
     get_options(&opt, &av[1]);
-    if (!opt.hash_ref)
+    if (!opt.hash_ref && !opt.hash_filepath)
     {
-        fprintf(stderr, "%s%s", av[0], " hash [-v[v]]\n");
+        fprintf(stderr, "%s%c%s", av[0], ' ', MESSAGE_USAGE);
         return (EXIT_FAILURE);
     }
-    do
+    if (opt.hash_filepath)
+    {
+        get_hash(&opt);
+    }
+    if (opt.begin_from)
+    {
+        len = set_begining_passphrase(&passphrase, opt.begin_from);
+    }
+    else
     {
         len = get_next_passphrase(&passphrase, len);
     }
-    while (compare_passphrase(&opt, passphrase, len));
-    printf("Password found: %s\n", passphrase);
+    while (compare_passphrase(&opt, passphrase, len))
+    {
+        len = get_next_passphrase(&passphrase, len);
+    }
     return (0);
 }

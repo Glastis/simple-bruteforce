@@ -1,5 +1,7 @@
 SRC=			./main.c \
 			./utilities.c \
+			./file.c \
+			./hash.c \
 
 OBJ=			 $(SRC:.c=.o)
 
