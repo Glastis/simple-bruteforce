@@ -22,9 +22,11 @@ inline unsigned int         get_alphabet_rank(const char a)
 
 void                        reinit_options(t_opt *opt)
 {
+    opt->output_filepath = NULL;
     opt->hash_filepath = NULL;
     opt->hash_ref = NULL;
     opt->begin_from = NULL;
+    opt->quiet = FALSE;
     opt->verbose_lvl_1 = FALSE;
     opt->verbose_lvl_2 = FALSE;
 }
@@ -51,6 +53,10 @@ void                        get_options(t_opt *opt, char **av)
             {
                 opt->verbose_lvl_2 = TRUE;
             }
+            else if (!strcmp(OPTION_QUIET, av[i]))
+            {
+                opt->quiet = TRUE;
+            }
             else if (!strcmp(OPTION_BEGIN_FROM, av[i]))
             {
                 if (!av[i + 1])
@@ -69,6 +75,16 @@ void                        get_options(t_opt *opt, char **av)
                     return;
                 }
                 opt->hash_filepath = av[i + 1];
+                i += 1;
+            }
+            else if (!strcmp(OPTION_OUTPUT_FILE, av[i]))
+            {
+                if (!av[i + 1])
+                {
+                    reinit_options(opt);
+                    return;
+                }
+                opt->output_filepath = av[i + 1];
                 i += 1;
             }
             else

@@ -7,6 +7,20 @@
 
 #include "main.h"
 
+void                write_output(const char *filepath, const char *message)
+{
+    FILE            *fs;
+
+    fs = fopen(filepath, "a");
+    if (!fs)
+    {
+        fprintf(stderr, "%s: %s\n", filepath, MESSAGE_OPEN_FAIL);
+        exit(EXIT_FAILURE);
+    }
+    fprintf(fs, "%s", message);
+    fclose(fs);
+}
+
 static char         *get_file(const char *filepath)
 {
     FILE            *fs;
@@ -73,7 +87,16 @@ void                get_hash(t_opt *opt)
     fill_hash_ref(opt, raw);
     while (opt->hash_ref[i])
     {
-        printf("Hash found in file: %s\n", opt->hash_ref[i]);
+        if (!opt->quiet)
+        {
+            printf("Hash found in file: %s\n", opt->hash_ref[i]);
+        }
+        if (opt->output_filepath)
+        {
+            write_output(opt->output_filepath, "Hash found in file: ");
+            write_output(opt->output_filepath, opt->hash_ref[i]);
+            write_output(opt->output_filepath, "\n");
+        }
         i += 1;
     }
 }

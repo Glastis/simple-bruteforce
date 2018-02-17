@@ -21,11 +21,13 @@
 #define OPTION_VERBOSE_2        "-vv"
 #define OPTION_BEGIN_FROM       "-r"
 #define OPTION_HASH_FILE        "-f"
+#define OPTION_OUTPUT_FILE      "-o"
+#define OPTION_QUIET            "-q"
 
 /* ERROR MESSAGES */
 
 #define MESSAGE_MALLOC_FAILED   "Error when allocating memory.\n"
-#define MESSAGE_USAGE           "hash \t[-v[v]]\t\tverbose mode lvl 1/2 (print on error output).\n\t\t[-r begin_with]\tprovide password to begin with.\n\t\t[-f filepath]\tprovide file that contains hash to reverse.\n"
+#define MESSAGE_USAGE           "hash \t[-v[v]]\t\tverbose mode lvl 1/2 (print on error output).\n\t\t[-r begin_with]\tprovide password to begin with.\n\t\t[-f filepath]\tprovide file that contains hash to reverse.\n\t\t[-o filepath]\tspecify output file.\n\t\t[-q]\t\t\tsupress default output (not including verbose and file output).\n"
 #define MESSAGE_BEGINING_OPT    "Provided begining password not matching with ALPHABET macro.\n"
 #define MESSAGE_OPEN_FAIL       "Can't open file."
 
@@ -34,6 +36,8 @@ typedef struct                  s_opt
 {
     unsigned int                verbose_lvl_1;
     unsigned int                verbose_lvl_2;
+    unsigned int                quiet;
+    char                        *output_filepath;
     char                        *hash_filepath;
     char                        *begin_from;
     char                        **hash_ref;
@@ -48,6 +52,7 @@ void                            del_hash_ref(t_opt *opt, const unsigned int del_
 
 /* file.c */
 void                            get_hash(t_opt *opt);
+void                            write_output(const char *filepath, const char *message);
 
 /* hash.c */
 int                             compare_passphrase(t_opt *opt, const char *passphrase, const unsigned int len);
