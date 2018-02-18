@@ -62,12 +62,17 @@ static void         fill_hash_ref(t_opt *opt, char *raw)
         {
             i += 1;
         }
+        if (i > 0 && ((raw[i - 1] >= 'a' && raw[i - 1] <= 'z') ||
+                      (raw[i - 1] >= 'A' && raw[i - 1] <= 'Z') ||
+                      (raw[i - 1] >= '0' && raw[i - 1] <= '9')))
+        {
+            add_hash_ref(opt, &raw[tmp]);
+        }
         if (raw[i])
         {
             raw[i] = '\0';
             i += 1;
         }
-        add_hash_ref(opt, &raw[tmp]);
         while (raw[i] && (raw[i] < 'a' || raw[i] > 'z') &&
                          (raw[i] < 'A' || raw[i] > 'Z') &&
                          (raw[i] < '0' || raw[i] > '9'))
