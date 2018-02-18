@@ -7,7 +7,7 @@ md5 implementation from https://github.com/kikito/md5.lua - thanks
 ## Classic bruteforce
 
 ### Build and usage
-```BASH
+```
 make
 ./a.out hash_to_reverse [options]
 ```
@@ -24,6 +24,6 @@ You will need openssl to build it.
 
 ## Dictionary
 
-```BASH
+```
 lua main.lua dictionary_path hash_to_reverse [-v]
 ```
