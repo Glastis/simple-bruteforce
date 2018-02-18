@@ -48,7 +48,7 @@ int                     compare_passphrase(t_opt *opt, const char *passphrase, c
             }
             if (opt->output_filepath)
             {
-                write_output(opt->output_filepath, "\"Password found for ");
+                write_output(opt->output_filepath, "Password found for ");
                 write_output(opt->output_filepath, opt->hash_ref[i]);
                 write_output(opt->output_filepath, ": ");
                 write_output(opt->output_filepath, passphrase);

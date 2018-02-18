@@ -27,10 +27,15 @@
 /* ERROR MESSAGES */
 
 #define MESSAGE_MALLOC_FAILED   "Error when allocating memory.\n"
-#define MESSAGE_USAGE           "hash \t[-v[v]]\t\tverbose mode lvl 1/2 (print on error output).\n\t\t[-r begin_with]\tprovide password to begin with.\n\t\t[-f filepath]\tprovide file that contains hash to reverse.\n\t\t[-o filepath]\tspecify output file.\n\t\t[-q]\t\t\tsupress default output (not including verbose and file output).\n"
+#define MESSAGE_USAGE           "hash \t[-v[v]]\t\tverbose mode lvl 1/2 (print on error output).\n\t\t[-r begin_with]\tprovide password to begin with.\n\t\t[-f filepath]\tprovide file that contains hash to reverse.\n\t\t[-o filepath]\tspecify output file.\n\t\t[-q]\t\tsupress default output (not including verbose and file output).\n"
 #define MESSAGE_BEGINING_OPT    "Provided begining password not matching with ALPHABET macro.\n"
 #define MESSAGE_OPEN_FAIL       "Can't open file."
 
+typedef struct                  s_sav
+{
+    struct s_opt                *opt;
+    char                        *passphrase;
+}                               t_sav;
 
 typedef struct                  s_opt
 {
@@ -42,6 +47,9 @@ typedef struct                  s_opt
     char                        *begin_from;
     char                        **hash_ref;
 }                               t_opt;
+
+/* main.c */
+void                            sigint_handler(int i);
 
 /* utilities.c */
 unsigned int                    get_alphabet_rank(const char a);
