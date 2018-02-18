@@ -14,7 +14,7 @@ make
 You will need openssl to build it.
 
 ### Options
-```BASH
+```
 ./a.out hash    [-v[v]]         verbose mode lvl 1/2 (print on error output).
                 [-r begin_with] provide password to begin with.
                 [-f filepath]   provide file that contains hash to reverse.
