@@ -5,11 +5,21 @@ That's a project "for fun". If you really want to bruteforce something, you prob
 md5 implementation from https://github.com/kikito/md5.lua - thanks
 
 ## Classic bruteforce
+
 ```BASH
 make
-./a.out hash_to_reverse [-v[v]]
+./a.out hash_to_reverse [options]
 ```
 You will need openssl to build it.
+
+Options
+```BASH
+./a.out hash    [-v[v]]         verbose mode lvl 1/2 (print on error output).
+                [-r begin_with] provide password to begin with.
+                [-f filepath]   provide file that contains hash to reverse.
+                [-o filepath]   specify output file.
+                [-q]            supress default output (not including verbose and file output).
+```
 
 ## Dictionary
 ```BASH
